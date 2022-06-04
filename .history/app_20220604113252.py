@@ -1,9 +1,8 @@
 from flask import request
 from flask_api import FlaskAPI, status
-import torch 
 import json
 from intent_embedding import ExtractIntent
-
+import torch 
 
 device = torch.device("cpu")
 model = torch.load("SAVE_MODEL_DIR/model", map_location=device)

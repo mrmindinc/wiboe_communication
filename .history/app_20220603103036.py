@@ -1,14 +1,21 @@
 from flask import request
 from flask_api import FlaskAPI, status
-import torch 
 import json
 from intent_embedding import ExtractIntent
+import torch 
 
+import time
+
+start = time.time()
 
 device = torch.device("cpu")
 model = torch.load("SAVE_MODEL_DIR/model", map_location=device)
 model.eval()
 
+end = time.time()
+pre = end - start
+
+start2 = time.time()
 app = FlaskAPI(__name__)
 
 @app.route("/api/response", methods=['GET', 'POST'])
@@ -22,9 +29,11 @@ def api():
             _data = json.loads(_data)
 
         response = generat_intent.text_similarity(_data)
-
         return json.dumps(response, ensure_ascii=False), status.HTTP_200_OK
 
+end2 = time.time()
+pre2 = end2 - start2
+    
 if __name__ == '__main__':
     default_host = "0.0.0.0"
     default_port = "11000"

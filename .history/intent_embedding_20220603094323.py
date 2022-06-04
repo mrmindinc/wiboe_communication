@@ -1,27 +1,30 @@
+import torch
 import numpy as np
 from cosine_similarity import cosine_similarity_check
-from model_adapters import Adapter
-import numpy as np
 
 
-class ExtractIntent(Adapter):
+class ExtractIntent(object):
     def __init__(self, model):
-        super().__init__(model)
+        self.model = model
 
     def text_similarity(self, data):
         intent_list = data["intent_list"]
         intent_id = data["intent_id"]
         text = data["text"]
 
+        import time
+        start = time.time()
+
         intent_embedding = self.model.encode(intent_list)
+
+        end = time.time()
+        pre = end - start 
 
         score = []
         for embedding in intent_embedding:
             statement_input_embedding = self.model.encode(text)
             similarity = cosine_similarity_check(statement_input_embedding, embedding)
             score.append(similarity)
-            
-        print(score)
 
         percent = score[np.argmax(score)].tolist()
         percent = round(percent, 4)
@@ -45,4 +48,3 @@ class ExtractIntent(Adapter):
         print(score, np.argmax(score))
 
         return response_node
-

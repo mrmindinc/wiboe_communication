@@ -1,12 +1,9 @@
 import numpy as np
 from cosine_similarity import cosine_similarity_check
-from model_adapters import Adapter
 import numpy as np
 
 
-class ExtractIntent(Adapter):
-    def __init__(self, model):
-        super().__init__(model)
+class ExtractIntent(object):
 
     def text_similarity(self, data):
         intent_list = data["intent_list"]

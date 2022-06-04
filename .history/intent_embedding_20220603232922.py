@@ -1,17 +1,36 @@
+import torch
 import numpy as np
-from cosine_similarity import cosine_similarity_check
-from model_adapters import Adapter
-import numpy as np
+from adapter import Adapter
+from cosine_similarity import cosine_similarity_check, levenshtein_distance
 
 
 class ExtractIntent(Adapter):
-    def __init__(self, model):
-        super().__init__(model)
+    def __init__(self, model, **kwargs):
+        super().__init__(model, **kwargs)
 
     def text_similarity(self, data):
         intent_list = data["intent_list"]
         intent_id = data["intent_id"]
         text = data["text"]
+        
+        if len(intent_list) > 5:
+            confidence_list = []
+            for intent in intent_list:
+                confidence = levenshtein_distance(text, intent)
+                confidence_list.append(confidence)
+            
+            import numpy as np
+            sorted_indexs = np.argsort(confidence_list)[::-1]
+            
+            new_intent_list, new_intent_id = [], []
+            for sorted_index in sorted_indexs:
+                new_intent_list.append(intent_list[sorted_index])
+                new_intent_id.append(intent_id[sorted_index])
+                if len(new_intent_list) >= 5:
+                    break
+                
+            intent_list = new_intent_list
+            intent_id = new_intent_id
 
         intent_embedding = self.model.encode(intent_list)
 

@@ -1,12 +1,13 @@
+import torch
 import numpy as np
-from cosine_similarity import cosine_similarity_check
-from model_adapters import Adapter
+from adapter import Adapter
+from cosine_similarity import cosine_similarity_check, levenshtein_distance
 import numpy as np
 
 
 class ExtractIntent(Adapter):
-    def __init__(self, model):
-        super().__init__(model)
+    def __init__(self, model, **kwargs):
+        super().__init__(model, **kwargs)
 
     def text_similarity(self, data):
         intent_list = data["intent_list"]
