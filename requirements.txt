@@ -1,8 +1,12 @@
 flask==1.1.2
+Jinja2==2.11.2
+Werkzeug==1.0.1
 Flask-API==2.0
-numpy==1.19.2
+itsdangerous==2.0.1
 sklearn==0.0
 transformers==4.18.0
 sentence-transformers==2.2.0
 sentencepiece==0.1.96
 torch==1.11.0
+torch-utils==0.1.2 
+MarkupSafe==2.0.1
