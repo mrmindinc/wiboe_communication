@@ -1,1 +1,2 @@
 SAVE_MODEL_DIR/model filter=lfs diff=lfs merge=lfs -text
+SAVE_MODEL_DIR/model filter=lfs diff=lfs merge=lfs -text

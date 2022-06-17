@@ -5,9 +5,10 @@ import json
 from intent_embedding import ExtractIntent
 
 
-device = torch.device("cpu")
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+print(device)
 model = torch.load("SAVE_MODEL_DIR/model", map_location=device)
-model.eval()
+
 
 app = FlaskAPI(__name__)
 
