@@ -1,8 +1,9 @@
 from flask import request
 from flask_api import FlaskAPI, status
-import torch 
+import torch
 import json
 from intent_embedding import ExtractIntent
+
 
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -28,7 +29,7 @@ def api():
 
 if __name__ == '__main__':
     default_host = "0.0.0.0"
-    default_port = "11000"
+    default_port = "11012"
 
     import os
     os.environ['FLASK_ENV'] = "development"
