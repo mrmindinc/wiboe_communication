@@ -20,29 +20,27 @@ class ExtractIntent(Adapter):
             statement_input_embedding = self.model.encode(text)
             similarity = cosine_similarity_check(statement_input_embedding, embedding)
             score.append(similarity)
-            
-        print(score)
 
         percent = score[np.argmax(score)].tolist()
         percent = round(percent, 4)
 
         if percent >= 0.45 :
             response_node = {
-                'node_id': intent_id[np.argmax(score)],
+                'node_id': int(intent_id[np.argmax(score)]),
                 'node_text': intent_list[np.argmax(score)],
                 'confidence': percent
             }
 
         else :
             response_node = {
-                    'node_id': 700,
+                    'node_id': int(700),
                     'node_text': '무응답',
-                    'confidence': percent
+                    'confidence': 0.0
             }
 
-        print(response_node)
-        print(data["intent_list"])
-        print(score, np.argmax(score))
+        print("response_node: ", response_node)
+        print("intent_list: ", data["intent_list"])
+        print("score: ", score)
 
         return response_node
 
